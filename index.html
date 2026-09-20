@@ -1,0 +1,1143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GoTrip - Travel Booking</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Segoe UI", Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f7fb;
+            color: #172033;
+        }
+
+        /* ================= HEADER ================= */
+
+        header {
+            height: 72px;
+            background: rgba(255, 255, 255, 0.95);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 7%;
+            box-shadow: 0 3px 18px rgba(0,0,0,0.08);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 26px;
+            font-weight: 800;
+            color: #2563eb;
+        }
+
+        .logo span {
+            color: #111827;
+        }
+
+        nav {
+            display: flex;
+            gap: 28px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #4b5563;
+            font-size: 15px;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        nav a:hover {
+            color: #2563eb;
+        }
+
+        .login-btn {
+            border: none;
+            background: #2563eb;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        /* ================= HERO ================= */
+
+        .hero {
+            min-height: 480px;
+            background:
+                linear-gradient(rgba(7, 19, 43, 0.65), rgba(7, 19, 43, 0.65)),
+                url("https://images.unsplash.com/photo-1465447142348-e9952c393450?auto=format&fit=crop&w=1800&q=80")
+                center/cover;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 70px 20px;
+        }
+
+        .hero-content {
+            width: 1100px;
+            max-width: 100%;
+            text-align: center;
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 52px;
+            margin-bottom: 14px;
+        }
+
+        .hero p {
+            font-size: 18px;
+            opacity: 0.9;
+            margin-bottom: 40px;
+        }
+
+        /* ================= BOOKING CARD ================= */
+
+        .booking-card {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            text-align: left;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.25);
+            color: #111827;
+        }
+
+        .vehicle-tabs {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            margin-bottom: 25px;
+        }
+
+        .vehicle-tab {
+            min-width: 110px;
+            padding: 13px 18px;
+            border-radius: 12px;
+            border: 1px solid #e5e7eb;
+            background: #f8fafc;
+            cursor: pointer;
+            font-weight: 600;
+            text-align: center;
+            transition: 0.3s;
+        }
+
+        .vehicle-tab:hover {
+            background: #eff6ff;
+            transform: translateY(-2px);
+        }
+
+        .vehicle-tab.active {
+            background: #2563eb;
+            color: white;
+            border-color: #2563eb;
+        }
+
+        .vehicle-icon {
+            font-size: 22px;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* ================= FORM ================= */
+
+        .trip-options {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 18px;
+        }
+
+        .trip-options label {
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+        .field {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .field label {
+            font-size: 13px;
+            color: #6b7280;
+            margin-bottom: 7px;
+            font-weight: 600;
+        }
+
+        .field input,
+        .field select {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #dbe1ea;
+            border-radius: 10px;
+            outline: none;
+            background: #fff;
+            font-size: 14px;
+        }
+
+        .field input:focus,
+        .field select:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37,99,235,0.1);
+        }
+
+        .search-row {
+            margin-top: 20px;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .search-btn {
+            border: none;
+            background: #2563eb;
+            color: white;
+            padding: 14px 34px;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .search-btn:hover {
+            background: #1d4ed8;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(37,99,235,0.3);
+        }
+
+        /* ================= FEATURES ================= */
+
+        .section {
+            padding: 70px 7%;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .section-title h2 {
+            font-size: 34px;
+            margin-bottom: 10px;
+        }
+
+        .section-title p {
+            color: #6b7280;
+        }
+
+        .services {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 20px;
+        }
+
+        .service-card {
+            background: white;
+            padding: 28px 20px;
+            border-radius: 18px;
+            text-align: center;
+            border: 1px solid #e5e7eb;
+            transition: 0.3s;
+        }
+
+        .service-card:hover {
+            transform: translateY(-7px);
+            box-shadow: 0 12px 35px rgba(0,0,0,0.08);
+        }
+
+        .service-icon {
+            font-size: 42px;
+            margin-bottom: 15px;
+        }
+
+        .service-card h3 {
+            margin-bottom: 8px;
+        }
+
+        .service-card p {
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        /* ================= OFFERS ================= */
+
+        .offers {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 22px;
+        }
+
+        .offer-card {
+            padding: 25px;
+            border-radius: 18px;
+            background: linear-gradient(135deg, #eff6ff, #ffffff);
+            border: 1px solid #dbeafe;
+        }
+
+        .offer-badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            background: #dbeafe;
+            color: #1d4ed8;
+            font-size: 12px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .offer-card h3 {
+            margin-bottom: 8px;
+        }
+
+        .offer-card p {
+            color: #6b7280;
+            margin-bottom: 15px;
+        }
+
+        /* ================= MODAL ================= */
+
+        .modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.55);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            padding: 20px;
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            width: 450px;
+            max-width: 100%;
+            padding: 30px;
+            border-radius: 20px;
+            position: relative;
+            animation: popup 0.25s ease;
+        }
+
+        @keyframes popup {
+            from {
+                transform: scale(0.9);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .close {
+            position: absolute;
+            right: 20px;
+            top: 15px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #6b7280;
+        }
+
+        .booking-summary {
+            margin-top: 20px;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 9px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .fare {
+            font-size: 26px;
+            font-weight: 800;
+            color: #2563eb;
+            margin-top: 20px;
+        }
+
+        .confirm-btn {
+            margin-top: 20px;
+            width: 100%;
+            border: none;
+            background: #16a34a;
+            color: white;
+            padding: 14px;
+            border-radius: 10px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        /* ================= FOOTER ================= */
+
+        footer {
+            background: #111827;
+            color: white;
+            padding: 35px 7%;
+            text-align: center;
+        }
+
+        footer p {
+            color: #9ca3af;
+            margin-top: 8px;
+        }
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 900px) {
+
+            .hero h1 {
+                font-size: 40px;
+            }
+
+            .form-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .services {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .offers {
+                grid-template-columns: 1fr;
+            }
+
+            nav {
+                display: none;
+            }
+        }
+
+        @media (max-width: 600px) {
+
+            header {
+                padding: 0 20px;
+            }
+
+            .hero {
+                padding: 45px 15px;
+            }
+
+            .hero h1 {
+                font-size: 32px;
+            }
+
+            .hero p {
+                font-size: 15px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .services {
+                grid-template-columns: 1fr;
+            }
+
+            .trip-options {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .booking-card {
+                padding: 18px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- ================= HEADER ================= -->
+
+<header>
+
+    <div class="logo">
+        Go<span>Trip</span>
+    </div>
+
+    <nav>
+        <a href="#">Home</a>
+        <a href="#services">Services</a>
+        <a href="#offers">Offers</a>
+        <a href="#">My Bookings</a>
+    </nav>
+
+    <button class="login-btn">
+        Login
+    </button>
+
+</header>
+
+
+<!-- ================= HERO ================= -->
+
+<section class="hero">
+
+    <div class="hero-content">
+
+        <h1>Travel Made Simple</h1>
+
+        <p>
+            Book buses, flights, bikes, cars and autos in one place.
+        </p>
+
+
+        <!-- BOOKING CARD -->
+
+        <div class="booking-card">
+
+            <!-- VEHICLE TABS -->
+
+            <div class="vehicle-tabs">
+
+                <div class="vehicle-tab active" data-type="Bus">
+                    <span class="vehicle-icon">🚌</span>
+                    Bus
+                </div>
+
+                <div class="vehicle-tab" data-type="Flight">
+                    <span class="vehicle-icon">✈️</span>
+                    Flight
+                </div>
+
+                <div class="vehicle-tab" data-type="Bike">
+                    <span class="vehicle-icon">🏍️</span>
+                    Bike
+                </div>
+
+                <div class="vehicle-tab" data-type="Car">
+                    <span class="vehicle-icon">🚗</span>
+                    Car
+                </div>
+
+                <div class="vehicle-tab" data-type="Auto">
+                    <span class="vehicle-icon">🛺</span>
+                    Auto
+                </div>
+
+            </div>
+
+
+            <!-- TRIP TYPE -->
+
+            <div class="trip-options">
+
+                <label>
+                    <input type="radio" name="trip" value="One Way" checked>
+                    One Way
+                </label>
+
+                <label>
+                    <input type="radio" name="trip" value="Round Trip">
+                    Round Trip
+                </label>
+
+            </div>
+
+
+            <!-- FORM -->
+
+            <div class="form-grid">
+
+                <div class="field">
+
+                    <label>From</label>
+
+                    <input
+                        type="text"
+                        id="from"
+                        placeholder="Enter departure city"
+                    >
+
+                </div>
+
+
+                <div class="field">
+
+                    <label>To</label>
+
+                    <input
+                        type="text"
+                        id="to"
+                        placeholder="Enter destination"
+                    >
+
+                </div>
+
+
+                <div class="field">
+
+                    <label>Travel Date</label>
+
+                    <input
+                        type="date"
+                        id="date"
+                    >
+
+                </div>
+
+
+                <div class="field">
+
+                    <label>Passengers</label>
+
+                    <select id="passengers">
+
+                        <option value="1">1 Passenger</option>
+                        <option value="2">2 Passengers</option>
+                        <option value="3">3 Passengers</option>
+                        <option value="4">4 Passengers</option>
+                        <option value="5">5 Passengers</option>
+                        <option value="6">6 Passengers</option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <div class="search-row">
+
+                <button
+                    class="search-btn"
+                    onclick="searchTrip()"
+                >
+                    Search & Book
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= SERVICES ================= -->
+
+<section class="section" id="services">
+
+    <div class="section-title">
+
+        <h2>Everything You Need</h2>
+
+        <p>
+            Choose the best transportation option for your journey.
+        </p>
+
+    </div>
+
+
+    <div class="services">
+
+        <div class="service-card">
+
+            <div class="service-icon">🚌</div>
+
+            <h3>Bus</h3>
+
+            <p>
+                Comfortable intercity and interstate bus bookings.
+            </p>
+
+        </div>
+
+
+        <div class="service-card">
+
+            <div class="service-icon">✈️</div>
+
+            <h3>Flight</h3>
+
+            <p>
+                Find flights and compare your travel options.
+            </p>
+
+        </div>
+
+
+        <div class="service-card">
+
+            <div class="service-icon">🏍️</div>
+
+            <h3>Bike</h3>
+
+            <p>
+                Rent bikes for convenient city travel.
+            </p>
+
+        </div>
+
+
+        <div class="service-card">
+
+            <div class="service-icon">🚗</div>
+
+            <h3>Car</h3>
+
+            <p>
+                Book self-drive and rental cars easily.
+            </p>
+
+        </div>
+
+
+        <div class="service-card">
+
+            <div class="service-icon">🛺</div>
+
+            <h3>Auto</h3>
+
+            <p>
+                Quick and affordable city rides.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= OFFERS ================= -->
+
+<section class="section" id="offers">
+
+    <div class="section-title">
+
+        <h2>Special Offers</h2>
+
+        <p>
+            Save more on your next journey.
+        </p>
+
+    </div>
+
+
+    <div class="offers">
+
+        <div class="offer-card">
+
+            <span class="offer-badge">
+                BUS OFFER
+            </span>
+
+            <h3>Save ₹200</h3>
+
+            <p>
+                Get ₹200 off on your first bus booking.
+            </p>
+
+            <strong>
+                Code: FIRSTBUS
+            </strong>
+
+        </div>
+
+
+        <div class="offer-card">
+
+            <span class="offer-badge">
+                FLIGHT OFFER
+            </span>
+
+            <h3>Up to ₹1,000 OFF</h3>
+
+            <p>
+                Special discounts on selected flights.
+            </p>
+
+            <strong>
+                Code: FLY1000
+            </strong>
+
+        </div>
+
+
+        <div class="offer-card">
+
+            <span class="offer-badge">
+                CITY RIDE
+            </span>
+
+            <h3>20% OFF</h3>
+
+            <p>
+                Enjoy discounts on bike, car and auto rides.
+            </p>
+
+            <strong>
+                Code: CITY20
+            </strong>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= BOOKING MODAL ================= -->
+
+<div class="modal" id="bookingModal">
+
+    <div class="modal-content">
+
+        <span
+            class="close"
+            onclick="closeModal()"
+        >
+            ×
+        </span>
+
+        <h2>Booking Summary</h2>
+
+        <div class="booking-summary">
+
+            <div class="summary-row">
+
+                <span>Vehicle</span>
+
+                <strong id="summaryVehicle">
+                    Bus
+                </strong>
+
+            </div>
+
+
+            <div class="summary-row">
+
+                <span>From</span>
+
+                <strong id="summaryFrom">
+                    -
+                </strong>
+
+            </div>
+
+
+            <div class="summary-row">
+
+                <span>To</span>
+
+                <strong id="summaryTo">
+                    -
+                </strong>
+
+            </div>
+
+
+            <div class="summary-row">
+
+                <span>Date</span>
+
+                <strong id="summaryDate">
+                    -
+                </strong>
+
+            </div>
+
+
+            <div class="summary-row">
+
+                <span>Passengers</span>
+
+                <strong id="summaryPassengers">
+                    1
+                </strong>
+
+            </div>
+
+
+            <div class="summary-row">
+
+                <span>Trip</span>
+
+                <strong id="summaryTrip">
+                    One Way
+                </strong>
+
+            </div>
+
+
+            <div class="fare">
+
+                Estimated Fare:
+                ₹<span id="fare">0</span>
+
+            </div>
+
+
+            <button
+                class="confirm-btn"
+                onclick="confirmBooking()"
+            >
+                Confirm Booking
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+    <h3>GoTrip</h3>
+
+    <p>
+        Your one-stop travel booking platform.
+    </p>
+
+</footer>
+
+
+<script>
+
+    /* =========================================
+       GLOBAL VARIABLES
+    ========================================= */
+
+    let selectedVehicle = "Bus";
+
+
+    const prices = {
+
+        Bus: 650,
+
+        Flight: 4500,
+
+        Bike: 300,
+
+        Car: 1200,
+
+        Auto: 250
+
+    };
+
+
+    /* =========================================
+       VEHICLE TAB SELECTION
+    ========================================= */
+
+    const tabs = document.querySelectorAll(".vehicle-tab");
+
+
+    tabs.forEach(tab => {
+
+        tab.addEventListener("click", () => {
+
+            tabs.forEach(t => {
+
+                t.classList.remove("active");
+
+            });
+
+
+            tab.classList.add("active");
+
+
+            selectedVehicle = tab.dataset.type;
+
+        });
+
+    });
+
+
+    /* =========================================
+       DATE MINIMUM = TODAY
+    ========================================= */
+
+    const dateInput = document.getElementById("date");
+
+    const today = new Date();
+
+    const formattedToday =
+        today.toISOString().split("T")[0];
+
+    dateInput.min = formattedToday;
+
+
+    /* =========================================
+       SEARCH TRIP
+    ========================================= */
+
+    function searchTrip() {
+
+        const from =
+            document.getElementById("from").value.trim();
+
+        const to =
+            document.getElementById("to").value.trim();
+
+        const date =
+            document.getElementById("date").value;
+
+        const passengers =
+            parseInt(
+                document.getElementById("passengers").value
+            );
+
+
+        const trip =
+            document.querySelector(
+                'input[name="trip"]:checked'
+            ).value;
+
+
+        /* VALIDATION */
+
+        if (!from) {
+
+            alert("Please enter departure location.");
+
+            return;
+
+        }
+
+
+        if (!to) {
+
+            alert("Please enter destination.");
+
+            return;
+
+        }
+
+
+        if (!date) {
+
+            alert("Please select a travel date.");
+
+            return;
+
+        }
+
+
+        /* FARE CALCULATION */
+
+        let basePrice = prices[selectedVehicle];
+
+        let fare = basePrice * passengers;
+
+
+        if (trip === "Round Trip") {
+
+            fare = fare * 1.8;
+
+        }
+
+
+        /* UPDATE MODAL */
+
+        document.getElementById("summaryVehicle")
+            .textContent = selectedVehicle;
+
+
+        document.getElementById("summaryFrom")
+            .textContent = from;
+
+
+        document.getElementById("summaryTo")
+            .textContent = to;
+
+
+        document.getElementById("summaryDate")
+            .textContent = date;
+
+
+        document.getElementById("summaryPassengers")
+            .textContent = passengers;
+
+
+        document.getElementById("summaryTrip")
+            .textContent = trip;
+
+
+        document.getElementById("fare")
+            .textContent =
+            Math.round(fare).toLocaleString("en-IN");
+
+
+        /* SHOW MODAL */
+
+        document.getElementById("bookingModal")
+            .classList.add("show");
+
+    }
+
+
+    /* =========================================
+       CLOSE MODAL
+    ========================================= */
+
+    function closeModal() {
+
+        document.getElementById("bookingModal")
+            .classList.remove("show");
+
+    }
+
+
+    /* =========================================
+       CONFIRM BOOKING
+    ========================================= */
+
+    function confirmBooking() {
+
+        alert(
+            "🎉 Booking confirmed successfully! " +
+            "Your ticket details will be generated."
+        );
+
+
+        closeModal();
+
+    }
+
+
+    /* =========================================
+       CLOSE MODAL WHEN CLICKING OUTSIDE
+    ========================================= */
+
+    document.getElementById("bookingModal")
+        .addEventListener("click", function(event) {
+
+            if (event.target === this) {
+
+                closeModal();
+
+            }
+
+        });
+
+</script>
+
+</body>
+</html>
